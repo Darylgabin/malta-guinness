@@ -1,0 +1,211 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-cream: #f4ecdd;
+  --color-ivory: #fbf6ec;
+  --color-champagne: #e9d3a1;
+  --color-gold: #d4a038;
+  --color-goldlight: #f2c95c;
+  --color-amber: #c8701c;
+  --color-malt: #3a1d0e;
+  --color-brown: #4a2612;
+  --color-choc: #24110a;
+  --color-night: #120805;
+  --color-crimson: #a3141a;
+
+  --font-display: 'Anton', 'Impact', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  --scallop: 46px;
+}
+
+html {
+  background: var(--color-cream);
+  color: var(--color-malt);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+body {
+  background: var(--color-cream);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+html.is-loading body {
+  overflow: hidden;
+}
+::selection {
+  background: var(--color-gold);
+  color: var(--color-night);
+}
+
+/* ── Extruded display lettering ───────────────────────────────────────────
+   Solid face + a stacked shadow "side wall" + a soft cast shadow. Each
+   character is its own inline-block so it can flip in 3D independently. */
+.extrude {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  --face: #ead9b8;
+  --s1: #b88a3e;
+  --s2: #6e4718;
+  --cast: rgba(58, 29, 14, 0.28);
+  color: var(--face);
+}
+.extrude .ch {
+  display: inline-block;
+  white-space: pre;
+  backface-visibility: hidden;
+  transform-origin: 50% 85%;
+  text-shadow:
+    0 1px 0 var(--s1), 0 2px 0 var(--s1), 0 3px 0 var(--s1), 0 4px 0 var(--s1),
+    0 5px 0 var(--s2), 0 6px 0 var(--s2), 0 7px 0 var(--s2), 0 8px 0 var(--s2),
+    0 9px 0 var(--s2),
+    0 16px 22px var(--cast), 0 30px 50px var(--cast);
+}
+.extrude-dark {
+  --face: #3e1e0e;
+  --s1: #a8742b;
+  --s2: #5a3414;
+  --cast: rgba(58, 29, 14, 0.22);
+}
+.extrude-gold {
+  --face: #f2c95c;
+  --s1: #b07a1f;
+  --s2: #5c3509;
+  --cast: rgba(0, 0, 0, 0.55);
+}
+.extrude-cream {
+  --face: #f6ead2;
+  --s1: #c9a467;
+  --s2: #6b4517;
+  --cast: rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 767px) {
+  .extrude .ch {
+    text-shadow:
+      0 1px 0 var(--s1), 0 2px 0 var(--s1), 0 3px 0 var(--s2), 0 4px 0 var(--s2),
+      0 5px 0 var(--s2), 0 10px 16px var(--cast);
+  }
+}
+
+.split-line {
+  display: block;
+  perspective: 900px;
+}
+
+/* Highlight pill inside headlines */
+.pill-word {
+  display: inline-block;
+  padding: 0 0.14em;
+  margin: 0 0.04em;
+  border-radius: 0.14em;
+  background: linear-gradient(180deg, #f6cf62, #d99a2b);
+  box-shadow: 0 0.06em 0 #8a5714, 0 0.18em 0.4em rgba(0, 0, 0, 0.35), inset 0 0.04em 0 rgba(255, 255, 255, 0.5);
+}
+.pill-word .ch {
+  --face: #2a1208;
+  text-shadow: none;
+}
+
+@layer components {
+/* ── Gold coin badges ─────────────────────────────────────────────────── */
+.coin {
+  width: var(--d, 128px);
+  height: var(--d, 128px);
+  border-radius: 999px;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transform-style: preserve-3d;
+  background: radial-gradient(circle at 32% 28%, #fff2b8 0%, #f4cd5d 18%, #d9a133 52%, #a86c17 86%, #7a4b0c 100%);
+  box-shadow:
+    inset 0 0 0 calc(var(--d, 128px) * 0.045) rgba(255, 233, 160, 0.55),
+    inset 0 0 0 calc(var(--d, 128px) * 0.06) rgba(122, 75, 12, 0.6),
+    0 calc(var(--d, 128px) * 0.06) 0 #8b5a12,
+    0 calc(var(--d, 128px) * 0.18) calc(var(--d, 128px) * 0.3) rgba(58, 29, 14, 0.35);
+  color: #3a1d0e;
+  text-align: center;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.95;
+  will-change: transform;
+}
+.coin b {
+  font-size: calc(var(--d, 128px) * 0.19);
+  font-weight: 400;
+  display: block;
+  text-shadow: 0 1px 0 rgba(255, 240, 190, 0.7);
+}
+.coin small {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: calc(var(--d, 128px) * 0.075);
+  letter-spacing: 0.14em;
+  display: block;
+  margin-top: 0.3em;
+  opacity: 0.8;
+}
+
+/* ── Scalloped section edges (like the reference's wave transitions) ──── */
+.scallop-top {
+  -webkit-mask:
+    radial-gradient(calc(var(--scallop) * 1.02) at 50% calc(100% + 0px), #000 99%, #0000 101%) 50% 0 / calc(var(--scallop) * 2) var(--scallop) repeat-x,
+    linear-gradient(#000 0 0) 0 var(--scallop) / 100% 100% no-repeat;
+  mask:
+    radial-gradient(calc(var(--scallop) * 1.02) at 50% calc(100% + 0px), #000 99%, #0000 101%) 50% 0 / calc(var(--scallop) * 2) var(--scallop) repeat-x,
+    linear-gradient(#000 0 0) 0 var(--scallop) / 100% 100% no-repeat;
+}
+.scallop-bottom {
+  -webkit-mask:
+    radial-gradient(calc(var(--scallop) * 1.02) at 50% 0, #000 99%, #0000 101%) 50% 100% / calc(var(--scallop) * 2) var(--scallop) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--scallop)) no-repeat;
+  mask:
+    radial-gradient(calc(var(--scallop) * 1.02) at 50% 0, #000 99%, #0000 101%) 50% 100% / calc(var(--scallop) * 2) var(--scallop) repeat-x,
+    linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--scallop)) no-repeat;
+}
+
+}
+
+/* film grain over everything, very subtle */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0 0.05 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.line-art path,
+.line-art line,
+.line-art circle,
+.line-art ellipse,
+.line-art polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scroll-cue-line {
+  animation: cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  transform-origin: top;
+}
+@keyframes cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue-line { animation: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
